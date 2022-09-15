@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
-int dan = Integer.parseInt(request.getParameter("dan"));
-int limit = Integer.parseInt(request.getParameter("limit"));
+int dan = Integer.valueOf(request.getAttribute("dan")).intValue();
+int limit = Integer.valueOf(request.getAttribute("limit")).intValue();
 %>
 
 <h1><%=dan%></h1>
