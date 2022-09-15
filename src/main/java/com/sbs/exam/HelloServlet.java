@@ -1,4 +1,4 @@
-package org.example;
+package com.sbs.exam;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
