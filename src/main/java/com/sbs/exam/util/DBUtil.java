@@ -3,6 +3,7 @@ package com.sbs.exam.util;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,15 @@ public class DBUtil {
   public DBUtil(HttpServletRequest req, HttpServletResponse resp) {
     this.req = req;
     this.resp = resp;
+
+    try {
+      req.setCharacterEncoding("UTF-8");
+    } catch (UnsupportedEncodingException e) {
+      throw new RuntimeException(e);
+    }
+
+    resp.setCharacterEncoding("UTF-8");
+    resp.setContentType("text/html; charset-utf-8");
   }
 
   public Map<String, Object> selectRow(Connection dbConn, String sql) {
