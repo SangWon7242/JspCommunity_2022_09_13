@@ -1,4 +1,4 @@
-package com.sbs.exam;
+package com.sbs.exam.servlet;
 
 import com.sbs.exam.util.DBUtil;
 import jakarta.servlet.ServletException;
@@ -35,13 +35,12 @@ public class ArticleDetailServlet extends HttpServlet {
 
     try {
       con = DriverManager.getConnection(url, user, password);
-      DBUtil dbUtil = new DBUtil(req, resp);
 
       int id = Integer.parseInt(req.getParameter("id"));
 
       String sql = String.format("SELECT* FROM article WHERE id = %d", id);
 
-      Map<String, Object> articleRow = dbUtil.selectRow(con, sql);
+      Map<String, Object> articleRow = DBUtil.selectRow(con, sql);
 
       req.setAttribute("articleRow", articleRow);
       req.getRequestDispatcher("../article/detail.jsp").forward(req, resp);

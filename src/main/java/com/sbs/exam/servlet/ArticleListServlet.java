@@ -1,4 +1,4 @@
-package com.sbs.exam;
+package com.sbs.exam.servlet;
 
 import com.sbs.exam.util.DBUtil;
 import jakarta.servlet.ServletException;
@@ -36,10 +36,9 @@ public class ArticleListServlet extends HttpServlet {
 
     try {
       con = DriverManager.getConnection(url, user, password);
-      DBUtil dbUtil = new DBUtil(req, resp);
 
       String sql = "SELECT * FROM article";
-      List<Map<String, Object>> articleRows = dbUtil.selectRows(con, sql);
+      List<Map<String, Object>> articleRows = DBUtil.selectRows(con, sql);
 
       req.setAttribute("articleRows", articleRows);
       req.getRequestDispatcher("../article/list.jsp").forward(req, resp);
