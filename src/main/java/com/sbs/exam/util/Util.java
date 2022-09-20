@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-public class util {
+public class Util {
   public static boolean empty(HttpServletRequest req, String paramName) {
     String paramValue = req.getParameter(paramName);
 

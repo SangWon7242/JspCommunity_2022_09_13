@@ -2,7 +2,6 @@ DROP DATABASE IF EXISTS Jsp_Community;
 CREATE DATABASE Jsp_Community;
 USE Jsp_Community;
 
-
 # 게시물 생성
 CREATE TABLE article (
 	id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,

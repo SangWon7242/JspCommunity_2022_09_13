@@ -72,13 +72,13 @@ public class DBUtil {
         rows.add(row);
       }
     } catch (SQLException e) {
-      util.printEx("SQL 예외, SQL : " + sql, resp, e);
+      Util.printEx("SQL 예외, SQL : " + sql, resp, e);
     } finally {
       if (stmt != null) {
         try {
           stmt.close();
         } catch (SQLException e) {
-          util.printEx("SQL 예외, stmt 닫기", resp, e);
+          Util.printEx("SQL 예외, stmt 닫기", resp, e);
         }
       }
 
@@ -86,7 +86,7 @@ public class DBUtil {
         try {
           rs.close();
         } catch (SQLException e) {
-          util.printEx("SQL 예외, rs 닫기", resp, e);
+          Util.printEx("SQL 예외, rs 닫기", resp, e);
         }
       }
     }
