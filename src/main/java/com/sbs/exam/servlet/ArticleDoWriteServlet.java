@@ -48,7 +48,7 @@ public class ArticleDoWriteServlet extends HttpServlet {
       sql.append("SET regDate = NOW()");
       sql.append(", updateDate = NOW()");
       sql.append(", title = ?", title);
-      sql.append(", body = ?", body);
+      sql.append(", bodyoo = ?", body);
 
       int id = DBUtil.insert(con, sql);
       resp.getWriter().append(String.format("<script> alert('%d번 글이 등록되었습니다.'); location.replace('list'); </script>", id));

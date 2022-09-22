@@ -13,7 +13,7 @@ public class SecSql {
 
   @Override
   public String toString() {
-    return "sql=" + getFormat() + ", data=" + datas;
+    return getFormat() + "," + datas;
   }
 
   public SecSql() {
