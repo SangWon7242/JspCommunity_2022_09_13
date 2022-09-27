@@ -50,10 +50,27 @@ int totalPage = (int) request.getAttribute("totalPage");
         color: red;
       }
     </style>
-    <div class="page">
-      <% for (int i = 1; i <= totalPage; i++) { %>
+    <div class="page" style="display:inline-block;">
+      <% if ( cPage > 1 ) { %>
+        <a href="list?page=1">◀</a>
+      <% } %>
+      <%
+        int pageMenuSize = 5;
+        int from = cPage - pageMenuSize;
+        if ( from < 1 ) {
+          from = 1;
+        }
+        int end = cPage + pageMenuSize;
+        if ( end > totalPage ) {
+          end = totalPage;
+        }
+        for (int i = from; i <= end; i++) {
+      %>
         <a class="<%=cPage == i ? "red" : ""%>" href="list?page=<%=i%>"><%=i%></a>
       <% } %>
     </div>
+    <% if ( cPage < totalPage ) { %>
+      <a href="list?page=<%=totalPage%>">▶</a>
+    <% } %>
 </body>
 </html>
