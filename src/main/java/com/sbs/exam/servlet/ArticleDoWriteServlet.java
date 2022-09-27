@@ -1,5 +1,6 @@
 package com.sbs.exam.servlet;
 
+import com.sbs.exam.Config;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
 import jakarta.servlet.ServletException;
@@ -17,18 +18,14 @@ import java.sql.SQLException;
 public class ArticleDoWriteServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    String url = "jdbc:mysql://127.0.0.1:3306/Jsp_Community?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
-    String user = "sbsst";
-    String password = "sbs123414";
-
-
     req.setCharacterEncoding("UTF-8");
     resp.setCharacterEncoding("UTF-8");
     resp.setContentType("text/html; charset-utf-8");
 
+    String driverName = Config.getDriverClassName();
+
     try {
-      Class.forName("com.mysql.jdbc.Driver");
+      Class.forName(driverName);
     } catch (
         ClassNotFoundException e) {
       System.out.printf("[ClassNotFoundException 예외, %s]", e.getMessage());
@@ -40,7 +37,7 @@ public class ArticleDoWriteServlet extends HttpServlet {
     Connection con = null;
 
     try {
-      con = DriverManager.getConnection(url, user, password);
+      con = DriverManager.getConnection(Config.getDBUrl(), Config.getDBId(), Config.getDBPw());
 
       String title = req.getParameter("title");
       String body = req.getParameter("body");
