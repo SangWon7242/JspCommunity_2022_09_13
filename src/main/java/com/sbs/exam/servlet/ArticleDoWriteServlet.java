@@ -15,6 +15,7 @@ import java.sql.SQLException;
 
 @WebServlet("/article/doWrite")
 public class ArticleDoWriteServlet extends HttpServlet {
+  @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     String url = "jdbc:mysql://127.0.0.1:3306/Jsp_Community?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
@@ -48,7 +49,7 @@ public class ArticleDoWriteServlet extends HttpServlet {
       sql.append("SET regDate = NOW()");
       sql.append(", updateDate = NOW()");
       sql.append(", title = ?", title);
-      sql.append(", bodyoo = ?", body);
+      sql.append(", body = ?", body);
 
       int id = DBUtil.insert(con, sql);
       resp.getWriter().append(String.format("<script> alert('%d번 글이 등록되었습니다.'); location.replace('list'); </script>", id));
@@ -66,5 +67,10 @@ public class ArticleDoWriteServlet extends HttpServlet {
         }
       }
     }
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    doGet(req, resp);
   }
 }
