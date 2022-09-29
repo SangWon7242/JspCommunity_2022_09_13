@@ -1,6 +1,7 @@
 package com.sbs.exam.servlet;
 
 import com.sbs.exam.Config;
+import com.sbs.exam.exception.SQLErrorException;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
 import jakarta.servlet.ServletException;
@@ -55,6 +56,8 @@ public class ArticleDoModifyServlet extends HttpServlet {
     } catch (
         SQLException e) {
       e.printStackTrace();
+    } catch ( SQLErrorException e ) {
+      e.getOrigin().printStackTrace();
     } finally {
       if (con != null) {
         try {

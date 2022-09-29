@@ -1,6 +1,7 @@
 package com.sbs.exam.servlet;
 
 import com.sbs.exam.Config;
+import com.sbs.exam.exception.SQLErrorException;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
 import jakarta.servlet.ServletException;
@@ -26,6 +27,8 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
     try {
       Class.forName(driverName);
+    } catch ( SQLErrorException e ) {
+      e.getOrigin().printStackTrace();
     } catch (
         ClassNotFoundException e) {
       System.out.printf("[ClassNotFoundException 예외, %s]", e.getMessage());
