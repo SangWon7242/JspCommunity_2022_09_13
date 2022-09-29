@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet("/home/main")
-public class HomeMainServlet extends HttpServlet {
+@WebServlet("/member/doLogout")
+public class MemberDoLogoutServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
@@ -18,19 +18,9 @@ public class HomeMainServlet extends HttpServlet {
     resp.setContentType("text/html; charset-utf-8");
 
     HttpSession session = req.getSession();
+    session.removeAttribute("loginedMemberId");
 
-    boolean isLogined = false;
-    int loginedMemberId = -1;
-
-    if ( session.getAttribute("loginedMemberId") != null) {
-      loginedMemberId = (int) session.getAttribute("loginedMemberId");
-      isLogined = true;
-    }
-
-    req.setAttribute("isLogined", isLogined);
-    req.setAttribute("loginedMemberId", loginedMemberId);
-
-    req.getRequestDispatcher("../home/main.jsp").forward(req, resp);
+    resp.getWriter().append(String.format("<script> alert('로그아웃 성공'); location.replace('../home/main'); </script>"));
   }
 
   @Override
