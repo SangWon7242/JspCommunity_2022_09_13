@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -36,6 +37,25 @@ public class ArticleDetailServlet extends HttpServlet {
 
     try {
       con = DriverManager.getConnection(Config.getDBUrl(), Config.getDBId(), Config.getDBPw());
+
+      HttpSession session = req.getSession();
+
+      boolean isLogined = false;
+      int loginedMemberId = -1;
+      Map<String, Object> loginedMemberRow = null;
+
+      if (session.getAttribute("loginedMemberId") != null) {
+        loginedMemberId = (int) session.getAttribute("loginedMemberId");
+        isLogined = true;
+
+        SecSql sql = SecSql.from("SELECT * FROM member");
+        sql.append("WHERE id = ?", loginedMemberId);
+        loginedMemberRow = DBUtil.selectRow(con, sql);
+      }
+
+      req.setAttribute("isLogined", isLogined);
+      req.setAttribute("loginedMemberId", loginedMemberId);
+      req.setAttribute("loginedMemberRow", loginedMemberRow);
 
       int id = Integer.parseInt(req.getParameter("id"));
 
