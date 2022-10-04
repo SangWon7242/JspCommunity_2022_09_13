@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/s/*")
+@WebServlet("test/s/*")
 public class DispatcherServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,7 +30,7 @@ public class DispatcherServlet extends HttpServlet {
     String requestUri = req.getRequestURI();
     String[] requestUriBIts = requestUri.split("/");
 
-    if (requestUriBIts.length < 4 ) {
+    if (requestUriBIts.length < 5 ) {
       resp.getWriter().append("올바른 요청이 아닙니다.");
       return;
     }
@@ -73,8 +73,8 @@ public class DispatcherServlet extends HttpServlet {
       req.setAttribute("loginedMemberRow", loginedMemberRow);
       // 모든 요청을 들어가기 전에 무조건 해야 하는 일 끝
 
-      String controllerName = requestUriBIts[2];
-      String actionMethodName = requestUriBIts[3];
+      String controllerName = requestUriBIts[3];
+      String actionMethodName = requestUriBIts[4];
 
       System.out.println(controllerName);
       System.out.println(actionMethodName);
