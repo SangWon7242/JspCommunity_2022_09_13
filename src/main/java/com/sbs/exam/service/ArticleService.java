@@ -2,12 +2,9 @@ package com.sbs.exam.service;
 
 import com.sbs.exam.dao.ArticleDao;
 import com.sbs.exam.dto.Article;
-import com.sbs.exam.util.DBUtil;
-import com.sbs.exam.util.SecSql;
 
 import java.sql.Connection;
 import java.util.List;
-import java.util.Map;
 
 public class ArticleService {
   private ArticleDao articleDao;

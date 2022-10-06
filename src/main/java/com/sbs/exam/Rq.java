@@ -67,6 +67,15 @@ public class Rq {
     return actionMethodName;
   }
 
+  public String getParam(String paramName, String defaultValue) {
+    String paramValue = req.getParameter(paramName);
+
+    if(paramValue == null || paramValue.trim().length() == 0) {
+      return defaultValue;
+    }
+
+    return paramValue;
+  }
   public int getIntParam(String paramName, int defaultValue) {
     String value = req.getParameter(paramName);
 
@@ -91,7 +100,6 @@ public class Rq {
   }
 
   public void jsp(String jspPath) {
-    System.out.println(jspPath);
     RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/" + jspPath + ".jsp");
 
     try {
