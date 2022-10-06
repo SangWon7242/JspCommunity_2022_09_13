@@ -22,6 +22,7 @@ public class ArticleController extends Controller {
   public ArticleController(HttpServletRequest req, HttpServletResponse resp, Connection con) {
     this.req = req;
     this.resp = resp;
+    this.con = con;
 
     articleService = new ArticleService(con);
   }
@@ -63,6 +64,7 @@ public class ArticleController extends Controller {
 
     int id = DBUtil.insert(con, sql);
     rq.appendBody(String.format("<script> alert('%d번 글이 등록되었습니다.'); location.replace('list'); </script>", id));
+
   }
 
   private void actionShowWrite(Rq rq) {
