@@ -1,6 +1,7 @@
 package com.sbs.exam.servlet;
 
 import com.sbs.exam.Config;
+import com.sbs.exam.Rq;
 import com.sbs.exam.controller.ArticleController;
 import com.sbs.exam.exception.SQLErrorException;
 import com.sbs.exam.util.DBUtil;
@@ -23,16 +24,11 @@ import java.util.Map;
 public class DispatcherServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    req.setCharacterEncoding("UTF-8");
-    resp.setCharacterEncoding("UTF-8");
-    resp.setContentType("text/html; charset-utf-8");
 
-    String requestUri = req.getRequestURI();
-    String[] requestUriBIts = requestUri.split("/");
+    Rq rq = new Rq(req, resp);
 
-    if (requestUriBIts.length < 4 ) {
-      resp.getWriter().append("올바른 요청이 아닙니다.");
-      return;
+    if(rq.getIsInvalid()) {
+      rq.appendBody("올바른 요청이 아닙니다.");
     }
 
     String driverName = Config.getDriverClassName();
@@ -42,7 +38,7 @@ public class DispatcherServlet extends HttpServlet {
     } catch (
         ClassNotFoundException e) {
       System.out.printf("[ClassNotFoundException 예외, %s]", e.getMessage());
-      resp.getWriter().append("DB 드라이버 클래스 로딩 실패");
+      rq.appendBody("DB 드라이버 클래스 로딩 실패");
       return;
     }
 
@@ -73,13 +69,10 @@ public class DispatcherServlet extends HttpServlet {
       req.setAttribute("loginedMemberRow", loginedMemberRow);
       // 모든 요청을 들어가기 전에 무조건 해야 하는 일 끝
 
-      String controllerName = requestUriBIts[2];
-      String actionMethodName = requestUriBIts[3];
-
-      if ( controllerName.equals("article") ) {
+      if ( rq.getControllerName().equals("article") ) {
         ArticleController controller = new ArticleController(req, resp, con);
 
-        if ( actionMethodName.equals("list")) {
+        if ( rq.getActionMethodName().equals("list")) {
           controller.actionList();
         }
       }
