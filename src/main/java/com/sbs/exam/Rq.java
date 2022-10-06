@@ -1,5 +1,7 @@
 package com.sbs.exam;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -10,6 +12,7 @@ public class Rq {
   private HttpServletRequest req;
   private HttpServletResponse resp;
   private boolean isInvalid = false;
+  private String controllerTypeName;
   private String controllerName;
   private String actionMethodName;
 
@@ -40,6 +43,7 @@ public class Rq {
       return;
     }
 
+    this.controllerTypeName = requestUriBIts[1];
     this.controllerName = requestUriBIts[2];
     this.actionMethodName = requestUriBIts[3];
   }
@@ -52,6 +56,9 @@ public class Rq {
     return isInvalid;
   }
 
+  public String getControllerTypeName() {
+    return controllerTypeName;
+  }
   public String getControllerName() {
     return controllerName;
   }
@@ -73,12 +80,24 @@ public class Rq {
     catch ( NumberFormatException e) {
       return defaultValue;
     }
-
   }
 
   public void appendBody(String str) {
     try {
       resp.getWriter().append(str);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public void jsp(String jspPath) {
+    System.out.println(jspPath);
+    RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/" + jspPath + ".jsp");
+
+    try {
+      requestDispatcher.forward(req, resp);
+    } catch (ServletException e) {
+      throw new RuntimeException(e);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
