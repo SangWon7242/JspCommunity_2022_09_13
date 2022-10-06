@@ -1,5 +1,6 @@
 package com.sbs.exam.controller;
 
+import com.sbs.exam.dto.Article;
 import com.sbs.exam.service.ArticleService;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
@@ -34,9 +35,9 @@ public class ArticleController {
     }
 
     int totalPage = articleService.getForPrintListTotalPage();
-    List<Map<String, Object>> articleRows = articleService.getForPrintArticleRows(page);
+    List<Article> articles = articleService.getForPrintArticles(page);
 
-    req.setAttribute("articleRows", articleRows);
+    req.setAttribute("articles", articles);
     req.setAttribute("page", page);
     req.setAttribute("totalPage", totalPage);
     req.getRequestDispatcher("/jsp/article/list.jsp").forward(req, resp);
