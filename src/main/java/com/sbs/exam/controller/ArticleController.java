@@ -39,6 +39,6 @@ public class ArticleController {
     req.setAttribute("articleRows", articleRows);
     req.setAttribute("page", page);
     req.setAttribute("totalPage", totalPage);
-    req.getRequestDispatcher("../article/list.jsp").forward(req, resp);
+    req.getRequestDispatcher("/jsp/article/list.jsp").forward(req, resp);
   }
 }

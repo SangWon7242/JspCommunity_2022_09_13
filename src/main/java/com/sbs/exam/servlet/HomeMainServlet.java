@@ -62,7 +62,7 @@ public class HomeMainServlet extends HttpServlet {
       req.setAttribute("loginedMemberId", loginedMemberId);
       req.setAttribute("loginedMemberRow", loginedMemberRow);
 
-      req.getRequestDispatcher("../home/main.jsp").forward(req, resp);
+      req.getRequestDispatcher("/jsp/home/main.jsp").forward(req, resp);
 
 
     } catch (
