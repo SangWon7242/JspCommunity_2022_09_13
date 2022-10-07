@@ -54,4 +54,12 @@ public class ArticleDao {
 
     return id;
   }
+
+  public Article getForPrintArticleById(int id) {
+    SecSql sql = SecSql.from("SELECT *");
+    sql.append("FROM article");
+    sql.append("WHERE id = ?", id);
+
+    return new Article(DBUtil.selectRow(con, sql));
+  }
 }

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 public class ArticleController extends Controller {
 
@@ -34,6 +35,9 @@ public class ArticleController extends Controller {
       case "list":
         actionList(rq);
         break;
+      case "detail":
+        actionDetailList(rq);
+      break;  
       case "write":
         actionShowWrite(rq);
         break;
@@ -44,6 +48,20 @@ public class ArticleController extends Controller {
         rq.println("존재하지 않는 페이지입니다.");
         break;
     }
+  }
+
+  private void actionDetailList(Rq rq) {
+    int id = rq.getIntParam("id", 0);
+
+    if (id == 0) {
+      rq.historyBack("id를 입력해주세요.");
+      return;
+    }
+
+    Article article = articleService.getForPrintArticleById(id);
+    rq.setAttr("article", article);
+
+    rq.jsp("article/detail");
   }
 
   private void actionDoWrite(Rq rq) {
@@ -93,9 +111,9 @@ public class ArticleController extends Controller {
     int totalPage = articleService.getForPrintListTotalPage();
     List<Article> articles = articleService.getForPrintArticles(page);
 
-    req.setAttribute("articles", articles);
-    req.setAttribute("page", page);
-    req.setAttribute("totalPage", totalPage);
+    rq.setAttr("articles", articles);
+    rq.setAttr("page", page);
+    rq.setAttr("totalPage", totalPage);
 
     rq.jsp("article/list");
   }
