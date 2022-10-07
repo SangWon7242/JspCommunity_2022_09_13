@@ -29,7 +29,7 @@ public class DispatcherServlet extends HttpServlet {
     Rq rq = new Rq(req, resp);
 
     if(rq.getIsInvalid()) {
-      rq.appendBody("올바른 요청이 아닙니다.");
+      rq.print("올바른 요청이 아닙니다.");
     }
 
     String driverName = Config.getDriverClassName();
@@ -39,7 +39,7 @@ public class DispatcherServlet extends HttpServlet {
     } catch (
         ClassNotFoundException e) {
       System.out.printf("[ClassNotFoundException 예외, %s]", e.getMessage());
-      rq.appendBody("DB 드라이버 클래스 로딩 실패");
+      rq.print("DB 드라이버 클래스 로딩 실패");
       return;
     }
 

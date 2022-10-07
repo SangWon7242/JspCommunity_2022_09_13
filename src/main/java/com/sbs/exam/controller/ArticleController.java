@@ -2,6 +2,7 @@ package com.sbs.exam.controller;
 
 import com.sbs.exam.Rq;
 import com.sbs.exam.dto.Article;
+import com.sbs.exam.dto.ResultData;
 import com.sbs.exam.service.ArticleService;
 import com.sbs.exam.util.DBUtil;
 import com.sbs.exam.util.SecSql;
@@ -46,24 +47,30 @@ public class ArticleController extends Controller {
     HttpSession session = req.getSession();
 
     if (session.getAttribute("loginedMemberId") == null) {
-      rq.appendBody(String.format("<script> alert('로그인 후 이용해주세요.'); location.replace('/jsp/member/login'); </script>"));
+      rq.print(String.format("<script> alert('로그인 후 이용해주세요.'); location.replace('/jsp/member/login'); </script>"));
       return;
     }
 
     String title = req.getParameter("title");
     String body = req.getParameter("body");
 
+    if (title.length() == 0) {
+      rq.historyBack("title을 입력해주세요.");
+      return;
+    }
+
+    if (body.length() == 0) {
+      rq.historyBack("body를 입력해주세요.");
+      return;
+    }
+
     int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 
-    SecSql sql = SecSql.from("INSERT INTO article");
-    sql.append("SET regDate = NOW()");
-    sql.append(", updateDate = NOW()");
-    sql.append(", title = ?", title);
-    sql.append(", body = ?", body);
-    sql.append(", memberId = ?", loginedMemberId);
+    ResultData writeRd = articleService.write(title, body, loginedMemberId);
 
-    int id = DBUtil.insert(con, sql);
-    rq.appendBody(String.format("<script> alert('%d번 글이 등록되었습니다.'); location.replace('list'); </script>", id));
+    rq.printf(writeRd.getMsg());
+
+    // rq.print(String.format("<script> alert('%d번 글이 등록되었습니다.'); location.replace('list'); </script>", id));
 
   }
 

@@ -17,5 +17,5 @@ Map<String, Object> loginedMemberRow = (Map<String, Object>) request.getAttribut
   <% if ( !isLogined ) { %>
   <a href="../member/login">로그인</a>
   <% } %>
-  <a href="../article/list">게시물 리스트</a>
+  <a href="/usr/article/list">게시물 리스트</a>
 </div>
