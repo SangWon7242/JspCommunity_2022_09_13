@@ -62,4 +62,12 @@ public class ArticleDao {
 
     return new Article(DBUtil.selectRow(con, sql));
   }
+
+  public void delete(int id) {
+    SecSql sql = SecSql.from("DELETE");
+    sql.append("FROM article");
+    sql.append("WHERE id = ?", id);
+
+    DBUtil.delete(con, sql);
+  }
 }
