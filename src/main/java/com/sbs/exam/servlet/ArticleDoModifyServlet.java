@@ -40,17 +40,7 @@ public class ArticleDoModifyServlet extends HttpServlet {
     try {
       con = DriverManager.getConnection(Config.getDBUrl(), Config.getDBId(), Config.getDBPw());
 
-      int id = Integer.parseInt(req.getParameter("id"));
-      String title = req.getParameter("title");
-      String body = req.getParameter("body");
 
-      SecSql sql = SecSql.from("UPDATE article");
-      sql.append("SET title = ?", title);
-      sql.append(", body = ?", body);
-      sql.append("WHERE id = ?", id);
-
-      DBUtil.update(con, sql);
-      resp.getWriter().append(String.format("<script> alert('%d번 글이 수정되었습니다.'); location.replace('detail?id=%d'); </script>", id, id));
 
 
     } catch (
